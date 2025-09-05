@@ -57,6 +57,13 @@ def inscribir_banda():
     ent = tk.Entry(ventana_inscribir)
     ent.pack(pady=3)
 
+    registrar = tk.Label(ventana, text="Registro ")
+    registrar.pack(pady=10)
+
+    nombre_b = str(nombre_banda.get())
+    cat = str(categoria_banda.get())
+    registrar.config(text=f"Se registró la banda: {nombre_b}\n" f"Categoría: {cat}")
+
 def registrar_evaluacion():
     print("Registrar Evaluación")
     ventana_eval = tk.Toplevel(ventana)
