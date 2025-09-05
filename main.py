@@ -14,8 +14,8 @@ class BandaEscolar(Participante):
         self._categoria = categoria
         self._puntajes = {}
 
-    def set_categoria(self):
-        return self._categoria
+    def set_categoria(self, nueva_categoria):
+        self._categoria = nueva_categoria
 
     def registrar_puntajes(self, rango):
         pass
