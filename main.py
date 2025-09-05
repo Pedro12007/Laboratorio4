@@ -47,11 +47,26 @@ def inscribir_banda():
     ventana_inscribir.title("Inscribir Banda")
     ventana_inscribir.geometry("400x300")
 
+    nombre_banda = tk.Label(ventana_inscribir, text="Ingresar el nombre de la banda: ")
+    nombre_banda.pack(pady=3)
+    ent = tk.Entry(ventana_inscribir)
+    ent.pack(pady=3)
+
+    categoria_banda = tk.Label(ventana_inscribir, text="Ingresar la categoría de la banda: ")
+    categoria_banda.pack(pady=3)
+    ent = tk.Entry(ventana_inscribir)
+    ent.pack(pady=3)
+
 def registrar_evaluacion():
-    print("Se abrió la ventana: Registrar Evaluación")
+    print("Registrar Evaluación")
     ventana_eval = tk.Toplevel(ventana)
     ventana_eval.title("Registrar Evaluación")
     ventana_eval.geometry("400x300")
+
+    puntaje = tk.Label(ventana_eval, text="Ingresar puntaje:")
+    puntaje.pack(pady=3)
+    ent = tk.Entry(ventana_eval)
+    ent.pack(pady=3)
 
 def listar_bandas():
     print("Se abrió la ventana: Listado de Bandas")
