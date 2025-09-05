@@ -49,20 +49,23 @@ def inscribir_banda():
 
     nombre_banda = tk.Label(ventana_inscribir, text="Ingresar el nombre de la banda: ")
     nombre_banda.pack(pady=3)
-    ent = tk.Entry(ventana_inscribir)
-    ent.pack(pady=3)
+    ent_nombre = tk.Entry(ventana_inscribir)
+    ent_nombre.pack(pady=3)
 
     categoria_banda = tk.Label(ventana_inscribir, text="Ingresar la categoría de la banda: ")
     categoria_banda.pack(pady=3)
-    ent = tk.Entry(ventana_inscribir)
-    ent.pack(pady=3)
+    ent_cat = tk.Entry(ventana_inscribir)
+    ent_cat.pack(pady=3)
 
     registrar = tk.Label(ventana, text="Registro ")
     registrar.pack(pady=10)
 
-    nombre_b = str(nombre_banda.get())
-    cat = str(categoria_banda.get())
+    nombre_b = str(ent_nombre.get())
+    cat = str(ent_cat.get())
     registrar.config(text=f"Se registró la banda: {nombre_b}\n" f"Categoría: {cat}")
+
+    boton_inscribir = tk.Button(ventana_inscribir, text="Registrar", command=inscribir_banda)
+    boton_inscribir.pack(pady=5)
 
 def registrar_evaluacion():
     print("Registrar Evaluación")
@@ -90,6 +93,8 @@ def ver_ranking():
 def salir():
     print("Aplicación cerrada")
     ventana.quit()
+
+
 
 ventana = tk.Tk()
 ventana.title("Concurso de Bandas - Quetzaltenango")
