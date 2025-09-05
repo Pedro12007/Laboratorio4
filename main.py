@@ -1,5 +1,46 @@
 import tkinter as tk
 
+class Participante:
+    def __init__(self, nombre, institucion):
+        self.nombre = nombre
+        self.institucion = institucion
+
+    def mostrar_info(self):
+        pass
+
+class BandaEscolar(Participante):
+    def __init__(self, nombre, institucion, categoria):
+        super().__init__(nombre, institucion)
+        self._categoria = categoria
+        self._puntajes = {}
+
+    def set_categoria(self):
+        return self._categoria
+
+    def registrar_puntajes(self, rango):
+        pass
+
+    def mostrar_info(self):
+        pass
+
+class Concurso:
+    def inscribir_banda(self, banda):
+        pass
+
+    def registrar_evaluacion(self, nombre_banda, puntajes):
+        pass
+
+    def listar_bandas(self):
+        pass
+
+    def ranking(self):
+        pass
+
+
+
+
+
+
 def inscribir_banda():
     print("Se abrió la ventana: Inscribir Banda")
     ventana_inscribir = tk.Toplevel(ventana)
