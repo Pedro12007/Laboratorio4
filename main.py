@@ -1,10 +1,12 @@
 import tkinter as tk
+from abc import ABC, abstractmethod
 
-class Participante:
+class Participante(ABC):
     def __init__(self, nombre, institucion):
         self.nombre = nombre
         self.institucion = institucion
 
+    @abstractmethod
     def mostrar_info(self):
         pass
 
@@ -12,7 +14,7 @@ class BandaEscolar(Participante):
     def __init__(self, nombre, institucion, categoria):
         super().__init__(nombre, institucion)
         self._categoria = categoria
-        self._puntajes = {'ritmo': 0, 'uniformidad': 0, 'coreografia': 0, 'alineacion': 0, 'puntualidad': 0}
+        self._puntajes = {'Ritmo': 0, 'Uniformidad': 0, 'Coreografía': 0, 'Alineación': 0, 'Puntualidad': 0}
 
     def set_categoria(self, nueva_categoria):
         self._categoria = nueva_categoria
@@ -24,11 +26,19 @@ class BandaEscolar(Participante):
             self._puntajes[criterio] = puntaje
 
     def mostrar_info(self):
-        pass
+        return f'|Nombre: {self.nombre}| Institución: {self.institucion}| Categoria: {self._categoria}|\n     |Puntaje total: {self.total}| Promedio: {round(self.promedio, 2)}|'
+
+    @property
+    def total(self):
+        return sum(self._puntajes.values())
+
+    @property
+    def promedio(self):
+        return self.total / 5
 
 class Concurso:
     def __init__(self):
-        self.bandas = {}
+        self.bandas = {'Liceo': BandaEscolar('Liceo Guatemala', 'Liceo Guatemala', 'Básico'), 'Patria': BandaEscolar('Colors', 'La Patria', 'Básico')}
 
     def inscribir_banda(self, nombre, banda):
         if nombre in self.bandas:
@@ -41,21 +51,23 @@ class Concurso:
 
     def listar_bandas(self):
         if self.bandas:
-            for banda in self.bandas.values():
-                banda.mostrar_info()
-
-
+            listado = ''
+            for i, banda in enumerate(self.bandas.values(), 1):
+                listado += f'{i}. {banda.mostrar_info()}\n'
+            return listado
+        else:
+            return 'No hay bandas registradas.'
 
     def ranking(self):
         pass
 
-
+concurso = Concurso()
 
 class ConcursoBandasApp:
     def __init__(self):
         self.ventana = tk.Tk()
         self.ventana.title("Concurso de Bandas - Quetzaltenango")
-        self.ventana.geometry("500x300")
+        self.ventana.geometry("700x500")
 
         self.menu()
 
@@ -84,7 +96,7 @@ class ConcursoBandasApp:
         print("Se abrió la ventana: Inscribir Banda")
         ventana_inscribir = tk.Toplevel(self.ventana)
         ventana_inscribir.title("Inscribir Banda")
-        ventana_inscribir.geometry("400x300")
+        ventana_inscribir.geometry("700x500")
 
         tk.Label(ventana_inscribir, text="Ingresar el nombre de la banda:").pack(pady=3)
         ent_nombre = tk.Entry(ventana_inscribir)
@@ -108,19 +120,28 @@ class ConcursoBandasApp:
         print("Se abrió la ventana: Registrar Evaluación")
         ventana_eval = tk.Toplevel(self.ventana)
         ventana_eval.title("Registrar Evaluación")
-        ventana_eval.geometry("400x300")
+        ventana_eval.geometry("700x500")
 
     def listar_bandas(self):
         print("Se abrió la ventana: Listado de Bandas")
         ventana_listado = tk.Toplevel(self.ventana)
         ventana_listado.title("Listado de Bandas")
-        ventana_listado.geometry("400x300")
+        ventana_listado.geometry("700x500")
+
+        tk.Label(
+            ventana_listado,
+            text="Listado de bandas\n",
+            font=("Arial", 12, "bold"),
+            justify="center"
+        ).pack(pady=50)
+
+        tk.Label(ventana_listado, text=concurso.listar_bandas(), justify='left').pack(pady=5)
 
     def ver_ranking(self):
         print("Se abrió la ventana: Ranking Final")
         ventana_ranking = tk.Toplevel(self.ventana)
         ventana_ranking.title("Ranking Final")
-        ventana_ranking.geometry("400x300")
+        ventana_ranking.geometry("700x500")
 
 
 if __name__ == "__main__":
