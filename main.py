@@ -42,7 +42,7 @@ class Concurso:
 
     def inscribir_banda(self, nombre, banda):
         if nombre in self.bandas:
-            return 'Banda ya existente. No se ha podido guardar'
+            print('Banda ya existente. No se ha podido guardar')
         else:
             self.bandas[nombre] = banda
 
@@ -102,17 +102,35 @@ class ConcursoBandasApp:
         ent_nombre = tk.Entry(ventana_inscribir)
         ent_nombre.pack(pady=3)
 
+        tk.Label(ventana_inscribir, text="Ingresar el nombre de la institución:").pack(pady=3)
+        ent_inst = tk.Entry(ventana_inscribir)
+        ent_inst.pack(pady=3)
+
         tk.Label(ventana_inscribir, text="Ingresar la categoría de la banda:").pack(pady=3)
-        ent_cat = tk.Entry(ventana_inscribir)
-        ent_cat.pack(pady=3)
+
+        categorias_validas = ["Primaria", "Básico", "Diversificado"]
+
+        categoria_seleccionada = tk.StringVar(ventana_inscribir)
+        categoria_seleccionada.set("Seleccione una categoría")  # Valor por defecto
+
+        menu_cat = tk.OptionMenu(ventana_inscribir, categoria_seleccionada, *categorias_validas)
+        menu_cat.pack(pady=3)
 
         registrar = tk.Label(ventana_inscribir, text="")
         registrar.pack(pady=10)
 
         def registrar_banda():
             nombre_b = ent_nombre.get()
-            cat = ent_cat.get()
-            registrar.config(text=f"Se registró la banda:\n{nombre_b}\nCategoría:\n {cat}")
+            nombre_i = ent_inst.get()
+            cat = categoria_seleccionada.get()
+            if len(nombre_b.replace(' ', '')) and len(nombre_i.replace(' ', '')) and cat != "Seleccione una categoría":
+                if nombre_b not in concurso.bandas.keys():
+                    concurso.inscribir_banda(nombre_b, BandaEscolar(nombre_b, nombre_i, cat))
+                    registrar.config(text=f"Se registró la banda:\n{nombre_b}\nInstitución:\n{nombre_i}\nCategoría:\n {cat}")
+                else:
+                    registrar.config(text='Banda ya registrada. Ingrese otro nombre.')
+            else:
+                registrar.config(text='Campos sin llenar. Verifique sus datos.')
 
         tk.Button(ventana_inscribir, text="Registrar", command=registrar_banda).pack(pady=5)
 
