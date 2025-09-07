@@ -47,7 +47,13 @@ class Concurso:
             self.bandas[nombre] = banda
 
     def registrar_evaluacion(self, nombre_banda, puntajes):
-        pass
+        if nombre_banda in self.bandas:
+            banda = self.bandas[nombre_banda]
+            for criterio, valor in puntajes.items():
+                banda.registrar_puntajes(criterio, valor)
+            return f"Evaluación registrada para {nombre_banda}."
+        else:
+            return "Banda no encontrada."
 
     def listar_bandas(self):
         if self.bandas:
@@ -135,7 +141,7 @@ class ConcursoBandasApp:
         tk.Button(ventana_inscribir, text="Registrar", command=registrar_banda).pack(pady=5)
 
     def registrar_evaluacion(self):
-        print("Se abrió la ventana: Registrar Evaluación")
+        print("Registrar Evaluación")
         ventana_eval = tk.Toplevel(self.ventana)
         ventana_eval.title("Registrar Evaluación")
         ventana_eval.geometry("700x500")
