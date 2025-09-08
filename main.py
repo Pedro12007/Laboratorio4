@@ -67,10 +67,15 @@ class Concurso:
     def ranking(self):
         if not self.bandas:
             return "No se encontraron bandas registradas"
+
         ordenadas = sorted(self.bandas.values(), key=lambda b: b.total, reverse=True)
+
         resultado = "Ranking de Bandas:\n\n"
         for i, banda in enumerate(ordenadas, 1):
-            resultado += f"{i}. {banda.nombre} ({banda.institucion}) - Total: {banda.total}, Promedio: {round(banda.promedio, 2)}\n"
+            resultado += (f"{i}. {banda.nombre} ({banda.institucion})\n"
+                          f"   Categoría: {banda._categoria}\n"
+                          f"   Total: {banda.total}\n"
+                          f"   Promedio: {round(banda.promedio, 2)}\n\n")
         return resultado
 
 concurso = Concurso()
