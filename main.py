@@ -21,9 +21,9 @@ class BandaEscolar(Participante):
 
     def registrar_puntajes(self, criterio, puntaje):
         if criterio in self._puntajes:
-            return 'Criterio ya registrado. No se ha podido guardar.'
-        else:
             self._puntajes[criterio] = puntaje
+        else:
+            return "Criterio inválido"
 
     def mostrar_info(self):
         return f'|Nombre: {self.nombre}| Institución: {self.institucion}| Categoria: {self._categoria}|\n     |Puntaje total: {self.total}| Promedio: {round(self.promedio, 2)}|'
@@ -170,7 +170,7 @@ class ConcursoBandasApp:
             entrada.pack(pady=2)
             entradas[crit] = entrada
 
-        mensaje = tk.Label(ventana_eval, text="Evaluación registrada")
+        mensaje = tk.Label(ventana_eval, text="El puntaje debe ser entre 0 y 10")
         mensaje.pack(pady=10)
 
         def guardar():
@@ -207,10 +207,23 @@ class ConcursoBandasApp:
         tk.Label(ventana_listado, text=concurso.listar_bandas(), justify='left').pack(pady=5)
 
     def ver_ranking(self):
-        print("Se abrió la ventana: Ranking Final")
+        print("Ranking Final")
         ventana_ranking = tk.Toplevel(self.ventana)
         ventana_ranking.title("Ranking Final")
         ventana_ranking.geometry("700x500")
+
+        tk.Label(
+            ventana_ranking,
+            text="Ranking Final de Bandas",
+            font=("Arial", 12, "bold"),
+            justify="center"
+        ).pack(pady=20)
+
+        tk.Label(
+            ventana_ranking,
+            text=concurso.ranking(),
+            justify='left'
+        ).pack(pady=10)
 
 
 if __name__ == "__main__":
