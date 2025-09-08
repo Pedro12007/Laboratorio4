@@ -38,7 +38,7 @@ class BandaEscolar(Participante):
 
 class Concurso:
     def __init__(self):
-        self.bandas = {'Liceo': BandaEscolar('Liceo Guatemala', 'Liceo Guatemala', 'Básico'), 'Patria': BandaEscolar('Colors', 'La Patria', 'Básico')}
+        self.bandas = {}
 
     def inscribir_banda(self, nombre, banda):
         if nombre in self.bandas:
