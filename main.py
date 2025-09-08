@@ -65,7 +65,13 @@ class Concurso:
             return 'No hay bandas registradas.'
 
     def ranking(self):
-        pass
+        if not self.bandas:
+            return "No se encontraron bandas registradas"
+        ordenadas = sorted(self.bandas.values(), key=lambda b: b.total, reverse=True)
+        resultado = "Ranking de Bandas:\n\n"
+        for i, banda in enumerate(ordenadas, 1):
+            resultado += f"{i}. {banda.nombre} ({banda.institucion}) - Total: {banda.total}, Promedio: {round(banda.promedio, 2)}\n"
+        return resultado
 
 concurso = Concurso()
 
@@ -145,6 +151,40 @@ class ConcursoBandasApp:
         ventana_eval = tk.Toplevel(self.ventana)
         ventana_eval.title("Registrar Evaluación")
         ventana_eval.geometry("700x500")
+
+        tk.Label(ventana_eval, text="Ingrese el nombre de la Banda a Evaluar:").pack(pady=3)
+        ent_banda = tk.Entry(ventana_eval)
+        ent_banda.pack(pady=3)
+
+        criterios = ["Ritmo", "Uniformidad", "Coreografía", "Alineación", "Puntualidad"]
+        entradas = {}
+
+        for crit in criterios:
+            tk.Label(ventana_eval, text=f"{crit}:").pack(pady=2)
+            entrada = tk.Entry(ventana_eval)
+            entrada.pack(pady=2)
+            entradas[crit] = entrada
+
+        mensaje = tk.Label(ventana_eval, text="Evaluación registrada")
+        mensaje.pack(pady=10)
+
+        def guardar():
+            nombre = ent_banda.get().strip()
+            puntajes = {}
+            try:
+                for crit, ent in entradas.items():
+                    valor = int(ent.get())
+                    if 0 <= valor <= 10:  # validación rango
+                        puntajes[crit] = valor
+                    else:
+                        mensaje.config(text=f"El puntaje de {crit} debe ser entre 0 y 10.")
+                        return
+                resultado = concurso.registrar_evaluacion(nombre, puntajes)
+                mensaje.config(text=resultado)
+            except ValueError:
+                mensaje.config(text="Ingrese solo valores válidos en los puntajes")
+
+        tk.Button(ventana_eval, text="Guardar Evaluación", command=guardar).pack(pady=5)
 
     def listar_bandas(self):
         print("Se abrió la ventana: Listado de Bandas")
